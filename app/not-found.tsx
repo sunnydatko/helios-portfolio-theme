@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { keyframes } from "@emotion/react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -52,6 +52,43 @@ const anim = (delay: string) => ({
 
 export default function NotFound() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const mouseRef = useRef<{ x: number; y: number } | null>(null);
+  const rafRef = useRef<number>(0);
+  const currentRef = useRef({ x: 0, y: 0 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    mouseRef.current = {
+      x: (e.clientX - rect.left) / rect.width,
+      y: (e.clientY - rect.top) / rect.height,
+    };
+  };
+
+  const handleMouseLeave = () => { mouseRef.current = null; };
+
+  useEffect(() => {
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+    const tick = () => {
+      if (bgRef.current) {
+        const target = mouseRef.current
+          ? { x: (mouseRef.current.x - 0.5) * 18, y: (mouseRef.current.y - 0.5) * 10 }
+          : { x: 0, y: 0 };
+
+        currentRef.current.x = lerp(currentRef.current.x, target.x, 0.04);
+        currentRef.current.y = lerp(currentRef.current.y, target.y, 0.04);
+
+        bgRef.current.style.transform =
+          `scale(1.07) translate(${currentRef.current.x.toFixed(2)}px, ${currentRef.current.y.toFixed(2)}px)`;
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, []);
 
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: "#040810", display: "flex", flexDirection: "column" }}>
@@ -59,6 +96,8 @@ export default function NotFound() {
 
       <Box
         ref={sectionRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         sx={{
           flex: 1,
           display: "flex",
@@ -67,8 +106,9 @@ export default function NotFound() {
           overflow: "hidden",
         }}
       >
-        {/* Background image */}
+        {/* Background image — parallax driven by RAF loop */}
         <Box
+          ref={bgRef}
           aria-hidden
           sx={{
             position: "absolute",
@@ -77,6 +117,8 @@ export default function NotFound() {
             backgroundSize: "cover",
             backgroundPosition: "center bottom",
             opacity: 0.9,
+            transform: "scale(1.07)",
+            willChange: "transform",
           }}
         />
 

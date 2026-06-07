@@ -25,22 +25,23 @@ export default function Testimonial() {
         borderTop: "1px solid rgba(255,255,255,0.06)",
         position: "relative",
         zIndex: 1,
+        overflow: "hidden",
       }}
     >
       <Box
-          aria-hidden
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: { xs: "120%", md: "900px" },
-            height: { xs: "120%", md: "600px" },
-            background:
-              "radial-gradient(circle, rgba(80,130,255,.12), transparent 70%)",
-            pointerEvents: "none",
-          }}
-        />
+        aria-hidden
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: { xs: "120%", md: "900px" },
+          height: { xs: "120%", md: "600px" },
+          background:
+            "radial-gradient(circle, rgba(80,130,255,.12), transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
       <Container sx={{ maxWidth: "650px !important", textAlign: "center", position: "relative" }}>
         <Typography
           component="span"

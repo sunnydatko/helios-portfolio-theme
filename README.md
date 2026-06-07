@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="app/favicon.png" alt="Helios" width="64" height="64" />
+  <img src="app/icon.svg" alt="Helios" width="64" height="64" />
 
   # Helios
 

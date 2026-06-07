@@ -3,7 +3,7 @@
 
   # Helios
 
-  **A space-dark, minimal portfolio template for engineers, designers, and creators.**
+  **A warm editorial portfolio template for engineers, designers, and creators.**
 
   Built with Next.js 16 · React 19 · Material UI 9 · TypeScript
 
@@ -24,13 +24,14 @@
 
 ## Design
 
-Helios draws its palette and mood from deep space — near-black backgrounds, cold blue-white accents, and a density that rewards attention without demanding it. The aesthetic is intentional:
+Helios pairs deep navy with warm gold — a palette that reads like candlelight against a night sky. The aesthetic is editorial and considered:
 
-- **Space-dark color palette** — rich near-black backgrounds offset by cool neutrals and precise accent hues that read like distant starlight
-- **Ambient background** — a slow, living backdrop that shifts like light refracting through atmosphere
-- **Typographic restraint** — Space Grotesk for headlines, Inter for body; hierarchy through weight and spacing, not decoration
-- **Minimal chrome** — no sidebars, no noise, no gradients competing for attention; the work speaks, the interface recedes
+- **Warm-on-dark palette** — near-black navy backgrounds (`#080d1a`) offset by gold and amber accents (`#D9A441`) and warm cream text (`#F6F2EB`); richness without harshness
+- **Serif-led typography** — Instrument Serif for all headings gives a literary, editorial weight; Inter handles body copy with quiet clarity; hierarchy comes from contrast between the two, not from decoration
+- **Living ambient layer** — an animated canvas particle field with drifting constellation lines, parallax gradient auras, a cursor glow that trails the pointer, botanical sprig silhouettes, and a fine noise texture woven into the background
+- **Minimal chrome** — no sidebars, no competing gradients in content areas; the work speaks, the interface recedes
 - **Scroll-driven reveals** — content surfaces as you move through the page, each section arriving with quiet intention
+- **Reduced-motion aware** — all animations respect `prefers-reduced-motion`
 
 ---
 
@@ -39,8 +40,12 @@ Helios draws its palette and mood from deep space — near-black backgrounds, co
 - **Hero** — headline, subhead, and social links
 - **About** — personal bio and summary
 - **Experience** — chronological work history with company, role, and highlights
-- **Blog** — card grid of articles with individual post pages at `/blog/[slug]`
+- **Testimonials** — pull-quote with avatar and attribution
+- **Blog** — card grid of articles with individual post pages at `/blog/[slug]`; reading progress bar on post pages
 - **Contact** — inbound contact form
+- **Responsive navigation** — top nav collapses to a hamburger drawer on mobile
+- **Page loader** — branded loading screen on initial visit
+- **Custom 404** — styled not-found page
 - **Scroll animations** — CSS-driven reveal system via Intersection Observer, no animation library required
 - **SEO-ready** — server-side rendering, Metadata API, statically generated blog pages, optimized images
 
@@ -53,7 +58,7 @@ Helios draws its palette and mood from deep space — near-black backgrounds, co
 | Framework | Next.js 16 (App Router) |
 | UI | Material UI 9 + Emotion |
 | Language | TypeScript 5 |
-| Fonts | Space Grotesk + Inter via `next/font` |
+| Fonts | Instrument Serif + Inter via `next/font` |
 | Runtime | React 19 |
 
 ---
@@ -76,13 +81,14 @@ All content lives in one file:
 **`app/helpers/config.ts`**
 
 ```ts
-export const social = [...]      // GitHub, LinkedIn, X
-export const experience = [...]  // Work history
-export const blogPosts = [...]   // Blog post metadata
-export const education = [...]   // Education
+export const social = [...]        // GitHub, LinkedIn, X
+export const experience = [...]    // Work history
+export const blogPosts = [...]     // Blog post metadata
+export const testimonials = [...]  // Pull quotes with attribution
+export const education = [...]     // Education
 ```
 
-The theme — colors, typography, dark mode — is in **`app/theme.ts`**.
+The theme — colors, typography, component overrides — is in **`app/theme.ts`**.
 
 ---
 
@@ -90,21 +96,28 @@ The theme — colors, typography, dark mode — is in **`app/theme.ts`**.
 
 ```
 app/
-├── blog/[slug]/         # Dynamic blog post pages
-├── components/          # All UI sections and layout components
-│   ├── Ambient.tsx      # Animated background
+├── blog/[slug]/              # Dynamic blog post pages
+├── components/
+│   ├── Ambient.tsx           # Animated background: particle field, gradient auras, cursor glow, botanical sprigs, noise, scroll reveal
+│   ├── BrandMark.tsx         # Logo / wordmark
 │   ├── Hero.tsx
 │   ├── About.tsx
 │   ├── Experience.tsx
-│   ├── Writing.tsx      # Blog card grid
+│   ├── Writing.tsx           # Blog card grid
+│   ├── Testimonial.tsx       # Pull-quote section
 │   ├── Contact.tsx
 │   ├── Footer.tsx
-│   └── ScrollReveal.tsx # Intersection Observer scroll animations
-├── helpers/config.ts    # Site content (single source of truth)
-├── theme.ts             # MUI theme
-├── globals.css          # Global styles + .reveal animation
-├── layout.tsx           # Root layout with metadata
-└── page.tsx             # Home page
+│   ├── ResponsiveMenu.tsx    # Top nav + mobile hamburger drawer
+│   ├── PageLoader.tsx        # Initial page load animation
+│   └── ReadingProgress.tsx   # Progress bar on blog post pages
+├── helpers/config.ts         # Site content (single source of truth)
+├── theme.ts                  # MUI theme (palette, typography, component overrides)
+├── globals.css               # Global styles + .reveal animation classes
+├── layout.tsx                # Root layout with fonts and metadata
+├── loading.tsx               # Next.js loading state
+├── not-found.tsx             # Custom 404 page
+├── providers.tsx             # MUI theme provider wrapper
+└── page.tsx                  # Home page
 ```
 
 ---

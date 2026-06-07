@@ -20,9 +20,11 @@ export default function About() {
       id="about"
       sx={{
         py: { xs: 10, md: 14 },
-        borderTop: "1px solid rgba(255,255,255,0.06)",
+        borderTop: "1px solid rgba(217,164,65,0.12)",
         position: "relative",
         zIndex: 1,
+        background:
+          "radial-gradient(ellipse 80% 55% at 50% 40%, rgba(217,164,65,0.07) 0%, transparent 70%)",
       }}
     >
       <Container

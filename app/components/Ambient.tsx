@@ -63,9 +63,9 @@ const GradientAura = () => {
   return (
     <div className="ambient-layer" aria-hidden>
       <div ref={ref} style={{ position: "absolute", inset: 0, willChange: "transform" }}>
-        <div className="ambient-aura plum" />
-        <div className="ambient-aura olive" />
-        <div className="ambient-aura plum-deep" />
+        <div className="ambient-aura blue" />
+        <div className="ambient-aura sky" />
+        <div className="ambient-aura navy" />
         <BotanicalSprig
           className="sway"
           style={{ position: "absolute", bottom: -10, left: "3vw", width: 90, height: 240, opacity: 0.12 }}

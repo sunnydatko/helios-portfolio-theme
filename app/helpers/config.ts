@@ -34,7 +34,7 @@ export const experience = [
     ],
   },
   {
-    company: "Orion Systems",
+    company: "Helios Systems",
     url: "https://example.com",
     title: "Software Engineer II",
     dates: "March 2019 – January 2021",

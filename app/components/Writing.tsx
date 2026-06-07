@@ -23,9 +23,11 @@ export default function Writing() {
       id="blog"
       sx={{
         py: { xs: 10, md: 14 },
-        borderTop: "1px solid rgba(255,255,255,0.06)",
+        borderTop: "1px solid rgba(217,164,65,0.12)",
         position: "relative",
         zIndex: 1,
+        background:
+          "radial-gradient(ellipse 75% 55% at 75% 50%, rgba(217,164,65,0.06) 0%, transparent 65%)",
       }}
     >
       <Container sx={{ maxWidth: "1100px !important" }}>
@@ -73,13 +75,13 @@ export default function Writing() {
                   left: 0,
                   right: 0,
                   height: "2px",
-                  backgroundColor: "#3B82F6",
+                  backgroundColor: "#D9A441",
                   transform: "scaleX(0)",
                   transformOrigin: "left",
                   transition: "transform 0.35s ease",
                 },
                 "&:hover": {
-                  borderColor: "rgba(59,130,246,0.20)",
+                  borderColor: "rgba(217,164,65,0.25)",
                   "&::after": { transform: "scaleX(1)" },
                   "& img": { transform: "scale(1.08)" },
                 },
@@ -120,7 +122,14 @@ export default function Writing() {
               >
                 {/* Number + category + read time */}
                 <Box
-                  sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    gap: 2,
+                    rowGap: 0.75,
+                    mb: 2,
+                  }}
                 >
                   <Typography
                     aria-hidden
@@ -131,34 +140,33 @@ export default function Writing() {
                       color: "rgba(255,255,255,0.10)",
                       lineHeight: 1,
                       userSelect: "none",
+                      flexShrink: 0,
                     }}
                   >
                     {String(index + 1).padStart(2, "0")}
                   </Typography>
-                  <Typography
+                  <Box
                     sx={{
-                      fontFamily: "var(--font-inter), sans-serif",
-                      fontWeight: 600,
-                      fontSize: 11,
-                      letterSpacing: "0.22em",
-                      textTransform: "uppercase",
-                      color: "grey.500",
+                      display: "flex",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                      gap: 2,
+                      rowGap: 0.5,
                     }}
                   >
-                    {post.category}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontFamily: "var(--font-inter), sans-serif",
-                      fontSize: 11,
-                      letterSpacing: "0.18em",
-                      textTransform: "uppercase",
-                      color: "grey.400",
-                    }}
-                  >
-                    · {post.readTime} min read
-                  </Typography>
-                  {post.date && (
+                    <Typography
+                      sx={{
+                        fontFamily: "var(--font-inter), sans-serif",
+                        fontWeight: 600,
+                        fontSize: 11,
+                        letterSpacing: "0.22em",
+                        textTransform: "uppercase",
+                        color: "grey.500",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {post.category}
+                    </Typography>
                     <Typography
                       sx={{
                         fontFamily: "var(--font-inter), sans-serif",
@@ -166,11 +174,26 @@ export default function Writing() {
                         letterSpacing: "0.18em",
                         textTransform: "uppercase",
                         color: "grey.400",
+                        whiteSpace: "nowrap",
                       }}
                     >
-                      · {post.date}
+                      · {post.readTime} min read
                     </Typography>
-                  )}
+                    {post.date && (
+                      <Typography
+                        sx={{
+                          fontFamily: "var(--font-inter), sans-serif",
+                          fontSize: 11,
+                          letterSpacing: "0.18em",
+                          textTransform: "uppercase",
+                          color: "grey.400",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        · {post.date}
+                      </Typography>
+                    )}
+                  </Box>
                 </Box>
 
                 {/* Title */}

@@ -13,9 +13,11 @@ export default function Experience() {
       id="experience"
       sx={{
         py: { xs: 10, md: 14 },
-        borderTop: "1px solid rgba(255,255,255,0.06)",
+        borderTop: "1px solid rgba(217,164,65,0.12)",
         position: "relative",
         zIndex: 1,
+        background:
+          "radial-gradient(ellipse 70% 50% at 25% 50%, rgba(217,164,65,0.06) 0%, transparent 65%)",
       }}
     >
       <Container sx={{ maxWidth: "880px !important" }}>
@@ -51,7 +53,7 @@ export default function Experience() {
               py: 1,
               mb: 5,
               borderLeft: "2px solid",
-              borderColor: "rgba(59,130,246,0.30)",
+              borderColor: "rgba(217,164,65,0.35)",
             }}
           >
             <Typography

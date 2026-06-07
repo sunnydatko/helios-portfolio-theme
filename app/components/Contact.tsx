@@ -90,9 +90,11 @@ export default function Contact() {
       id="contact"
       sx={{
         py: { xs: 10, md: 14 },
-        borderTop: "1px solid rgba(255,255,255,0.06)",
+        borderTop: "1px solid rgba(217,164,65,0.12)",
         position: "relative",
         zIndex: 1,
+        background:
+          "radial-gradient(ellipse 70% 60% at 50% 70%, rgba(217,164,65,0.07) 0%, transparent 65%)",
       }}
     >
       <Container sx={{ maxWidth: "760px !important" }}>

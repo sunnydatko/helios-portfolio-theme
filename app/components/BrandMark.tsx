@@ -1,26 +1,50 @@
 "use client";
 
-import Image from "next/image";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import faviconImg from "../favicon.png";
 
 type BrandMarkProps = {
   starSize?: number;
   fontSize?: number;
 };
 
+function HeliosSunIcon({ size }: { size: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 22 22"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      style={{ flexShrink: 0 }}
+    >
+      {[0, 90, 180, 270].map((deg) => (
+        <path
+          key={deg}
+          d="M11 1L9.75 7.2L12.25 7.2Z"
+          fill="#D9A441"
+          transform={deg ? `rotate(${deg},11,11)` : undefined}
+        />
+      ))}
+      {[45, 135, 225, 315].map((deg) => (
+        <path
+          key={deg}
+          d="M11 3.5L9.75 7.2L12.25 7.2Z"
+          fill="#D9A441"
+          transform={`rotate(${deg},11,11)`}
+        />
+      ))}
+      <circle cx="11" cy="11" r="4" fill="#D9A441" />
+      <circle cx="11" cy="11" r="2" fill="#F4D78B" />
+    </svg>
+  );
+}
+
 export default function BrandMark({ starSize = 22, fontSize = 16 }: BrandMarkProps) {
   return (
     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-      <Image
-        src={faviconImg}
-        width={starSize}
-        height={starSize}
-        alt=""
-        aria-hidden
-        style={{ flexShrink: 0 }}
-      />
+      <HeliosSunIcon size={starSize} />
       <Typography
         component="span"
         sx={{

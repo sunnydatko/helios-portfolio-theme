@@ -130,8 +130,8 @@ export default function Hero() {
             variant="h1"
             sx={{
               ...anim("0.7s"),
-              fontSize: { xs: "42px", sm: "60px", md: "80px" },
-              lineHeight: 1.02,
+              fontSize: { xs: "38px", sm: "54px", md: "72px" },
+              lineHeight: 0.95,
               color: "common.white",
               mb: { xs: 3, md: 4 },
             }}

@@ -28,30 +28,89 @@ export default function PageLoader() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#020817",
+          background: "#090807",
           zIndex: 9999,
           opacity: fading ? 0 : 1,
           transition: "opacity 0.5s ease",
           pointerEvents: fading ? "none" : "auto",
         }}
       >
-        <div className="orion-loader" aria-hidden="true">
-          <div className="orion-track" />
-          <div className="orion-arc" />
-          <svg
-            className="orion-sparkle"
-            width="18"
-            height="18"
-            viewBox="0 0 20 20"
+        <svg
+          width="160"
+          height="160"
+          viewBox="0 0 160 160"
+          fill="none"
+          aria-hidden="true"
+        >
+          <defs>
+            <radialGradient id="hlsP-sun" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#fff8ed" />
+              <stop offset="35%" stopColor="#F4D78B" />
+              <stop offset="100%" stopColor="#D9A441" />
+            </radialGradient>
+            <radialGradient
+              id="hlsP-ray"
+              cx="80"
+              cy="80"
+              r="60"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0%" stopColor="#F4D78B" stopOpacity="0" />
+              <stop offset="22%" stopColor="#F4D78B" stopOpacity="0.9" />
+              <stop offset="80%" stopColor="#D9A441" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#D9A441" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="hlsP-bloom" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#D9A441" stopOpacity="0.22" />
+              <stop offset="60%" stopColor="#D9A441" stopOpacity="0.06" />
+              <stop offset="100%" stopColor="#D9A441" stopOpacity="0" />
+            </radialGradient>
+            <filter id="hlsP-glow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="5" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          {/* Atmospheric bloom */}
+          <circle cx="80" cy="80" r="72" fill="url(#hlsP-bloom)" className="hlsP-bloom" />
+
+          {/* Decorative orbit ring */}
+          <circle
+            cx="80"
+            cy="80"
+            r="64"
             fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M10 0 L11.5 8.5 L20 10 L11.5 11.5 L10 20 L8.5 11.5 L0 10 L8.5 8.5 Z"
-              fill="rgba(147, 197, 253, 0.65)"
-            />
-          </svg>
-        </div>
+            stroke="rgba(217,164,65,0.08)"
+            strokeWidth="1"
+          />
+
+          {/* Corona — slow rotation */}
+          <g className="hlsP-corona">
+            {/* Long rays (cardinal) */}
+            <line x1="80" y1="60" x2="80" y2="22" stroke="url(#hlsP-ray)" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="100" y1="80" x2="138" y2="80" stroke="url(#hlsP-ray)" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="80" y1="100" x2="80" y2="138" stroke="url(#hlsP-ray)" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="60" y1="80" x2="22" y2="80" stroke="url(#hlsP-ray)" strokeWidth="1.5" strokeLinecap="round" />
+            {/* Short rays (diagonal) */}
+            <line x1="94" y1="66" x2="108" y2="52" stroke="url(#hlsP-ray)" strokeWidth="1" strokeLinecap="round" />
+            <line x1="94" y1="94" x2="108" y2="108" stroke="url(#hlsP-ray)" strokeWidth="1" strokeLinecap="round" />
+            <line x1="66" y1="94" x2="52" y2="108" stroke="url(#hlsP-ray)" strokeWidth="1" strokeLinecap="round" />
+            <line x1="66" y1="66" x2="52" y2="52" stroke="url(#hlsP-ray)" strokeWidth="1" strokeLinecap="round" />
+          </g>
+
+          {/* Sun halo */}
+          <circle cx="80" cy="80" r="16" fill="#D9A441" filter="url(#hlsP-glow)" className="hlsP-halo" />
+
+          {/* Sun core */}
+          <circle cx="80" cy="80" r="11" fill="url(#hlsP-sun)" className="hlsP-core" />
+
+          {/* Specular highlight */}
+          <ellipse cx="75.5" cy="75" rx="3" ry="2" fill="rgba(255,250,242,0.55)" />
+        </svg>
+
         <span
           style={{
             position: "absolute",
@@ -68,47 +127,44 @@ export default function PageLoader() {
           Loading
         </span>
       </div>
+
       <style>{`
-        .orion-loader {
-          position: relative;
-          width: 160px;
-          height: 160px;
+        .hlsP-corona {
+          transform-origin: 80px 80px;
+          animation: hlsPSpin 12s linear infinite;
         }
-        .orion-track {
-          position: absolute;
-          inset: 0;
-          border-radius: 50%;
-          border: 1.5px solid rgba(59, 130, 246, 0.12);
+        .hlsP-core {
+          transform-box: fill-box;
+          transform-origin: center;
+          animation: hlsPPulse 3s ease-in-out infinite;
         }
-        .orion-arc {
-          position: absolute;
-          inset: 0;
-          border-radius: 50%;
-          background: conic-gradient(
-            from 270deg,
-            transparent 0%,
-            rgba(59, 130, 246, 0.08) 25%,
-            rgba(59, 130, 246, 0.4) 60%,
-            rgba(147, 197, 253, 0.85) 82%,
-            rgba(255, 255, 255, 0.95) 93%,
-            transparent 100%
-          );
-          -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0);
-          mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 0);
-          animation: orionSpin 2s linear infinite;
+        .hlsP-halo {
+          transform-box: fill-box;
+          transform-origin: center;
+          animation: hlsPHalo 3s ease-in-out infinite;
         }
-        .orion-sparkle {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          opacity: 0.7;
+        .hlsP-bloom {
+          animation: hlsPBloom 4s ease-in-out infinite;
         }
-        @keyframes orionSpin {
+        @keyframes hlsPSpin {
           to { transform: rotate(360deg); }
         }
+        @keyframes hlsPPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.08); }
+        }
+        @keyframes hlsPHalo {
+          0%, 100% { transform: scale(1); opacity: 0.55; }
+          50% { transform: scale(1.5); opacity: 0.85; }
+        }
+        @keyframes hlsPBloom {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
         @media (prefers-reduced-motion: reduce) {
-          .orion-arc { animation: none; }
+          .hlsP-corona, .hlsP-core, .hlsP-halo, .hlsP-bloom {
+            animation: none;
+          }
         }
       `}</style>
     </>

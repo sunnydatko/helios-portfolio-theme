@@ -8,6 +8,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import ResponsiveMenu from "./components/ResponsiveMenu";
 import Footer from "./components/Footer";
+import notFoundBg from "./images/not-found-2.png";
 
 const fadeUp = keyframes`
   from { opacity: 0; transform: translateY(24px); filter: blur(4px); }
@@ -34,7 +35,7 @@ const glitch2 = keyframes`
   91%  { clip-path: inset(0  0 100% 0); transform: translate(0);    }
 `;
 
-// Subtle power-flicker on the base text, synced to the glitch window
+// Power-flicker synced to the glitch window
 const flicker = keyframes`
   0%, 92%, 100% { opacity: 1;    }
   93%           { opacity: 0.75; }
@@ -42,8 +43,6 @@ const flicker = keyframes`
   95%           { opacity: 0.45; }
   96%           { opacity: 1;    }
 `;
-
-const NEUTRAL = "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(59,130,246,0.07) 0%, transparent 70%)";
 
 const anim = (delay: string) => ({
   animation: `${fadeUp} 0.9s cubic-bezier(0.22, 1, 0.36, 1) ${delay} forwards`,
@@ -53,28 +52,13 @@ const anim = (delay: string) => ({
 
 export default function NotFound() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const cursorGlowRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cursorGlowRef.current || !sectionRef.current) return;
-    const rect = sectionRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    cursorGlowRef.current.style.background = `radial-gradient(ellipse 50% 50% at ${x}% ${y}%, rgba(59,130,246,0.12) 0%, transparent 70%)`;
-  };
-
-  const handleMouseLeave = () => {
-    if (cursorGlowRef.current) cursorGlowRef.current.style.background = NEUTRAL;
-  };
 
   return (
-    <Box sx={{ minHeight: "100vh", backgroundColor: "#080d1a", display: "flex", flexDirection: "column" }}>
+    <Box sx={{ minHeight: "100vh", backgroundColor: "#040810", display: "flex", flexDirection: "column" }}>
       <ResponsiveMenu />
 
       <Box
         ref={sectionRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
         sx={{
           flex: 1,
           display: "flex",
@@ -83,27 +67,57 @@ export default function NotFound() {
           overflow: "hidden",
         }}
       >
-        {/* Cursor-tracked illumination */}
+        {/* Background image */}
         <Box
-          ref={cursorGlowRef}
           aria-hidden
           sx={{
             position: "absolute",
             inset: 0,
-            background: NEUTRAL,
-            transition: "background 0.15s ease",
+            backgroundImage: `url(${notFoundBg.src})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center bottom",
+            opacity: 0.9,
+          }}
+        />
+
+        {/* Gradient overlay — darkens top & bottom, preserves planet glow */}
+        <Box
+          aria-hidden
+          sx={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(to bottom, rgba(4,8,16,0.55) 0%, rgba(4,8,16,0.08) 50%, rgba(4,8,16,0.35) 100%)",
+            zIndex: 1,
+          }}
+        />
+
+        {/* Horizon focal point — amplifies the glow origin in the photo */}
+        <Box
+          aria-hidden
+          sx={{
+            position: "absolute",
+            bottom: "18%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: 4,
+            height: 4,
+            borderRadius: "50%",
+            bgcolor: "rgba(180,210,255,0.9)",
+            boxShadow: "0 0 12px 4px rgba(77,130,245,0.5), 0 0 40px 12px rgba(77,130,245,0.18)",
+            zIndex: 2,
             pointerEvents: "none",
           }}
         />
 
-        {/* CRT scanlines */}
-
+        {/* CRT scanlines — reinforce the "lost signal" vibe */}
         <Box
           aria-hidden
           sx={{
             position: "absolute",
             inset: 0,
-            backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px)",
+            backgroundImage:
+              "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px)",
             pointerEvents: "none",
             zIndex: 2,
           }}
@@ -124,11 +138,10 @@ export default function NotFound() {
                   letterSpacing: "-0.04em",
                   userSelect: "none",
                   color: "transparent",
-                  WebkitTextStroke: "2px rgba(59,130,246,0.4)",
+                  WebkitTextStroke: "2px rgba(59,130,246,0.65)",
                   position: "relative",
                   animation: `${flicker} 5s infinite 1.2s`,
                   "@media (prefers-reduced-motion: reduce)": { animation: "none" },
-                  // Red channel
                   "&::before": {
                     content: '"404"',
                     position: "absolute",
@@ -138,7 +151,6 @@ export default function NotFound() {
                     animation: `${glitch1} 5s infinite`,
                     "@media (prefers-reduced-motion: reduce)": { display: "none" },
                   },
-                  // Cyan channel
                   "&::after": {
                     content: '"404"',
                     position: "absolute",
@@ -172,12 +184,12 @@ export default function NotFound() {
               variant="h2"
               sx={{
                 ...anim("0.6s"),
-                fontSize: { xs: "28px", md: "36px" },
+                fontSize: { xs: "22px", md: "26px" },
                 color: "common.white",
                 mb: 2,
               }}
             >
-              Page Not Found
+              Signal Lost
             </Typography>
 
             {/* Body */}
@@ -190,7 +202,8 @@ export default function NotFound() {
                 mb: { xs: 5, md: 6 },
               }}
             >
-              Looks like you've drifted off course. The page you're looking for doesn't exist or may have moved.            </Typography>
+              Your transmission didn&apos;t reach its destination. This page has drifted beyond known coordinates.
+            </Typography>
 
             {/* CTA */}
             <Box sx={{ ...anim("1.0s") }}>
@@ -204,7 +217,7 @@ export default function NotFound() {
                   "&:hover .arrow": { transform: "translateX(4px)" },
                 }}
               >
-                Back to Home
+                Return to Base
                 <Box component="span" className="arrow" aria-hidden>
                   {" "}→
                 </Box>

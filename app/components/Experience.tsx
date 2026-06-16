@@ -13,7 +13,6 @@ export default function Experience() {
       id="experience"
       sx={{
         py: { xs: 10, md: 14 },
-        borderTop: "1px solid rgba(217,164,65,0.12)",
         position: "relative",
         zIndex: 1,
         background:

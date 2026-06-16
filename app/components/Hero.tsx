@@ -108,6 +108,21 @@ export default function Hero() {
         }}
       />
 
+      {/* Bottom fade into content */}
+      <Box
+        aria-hidden
+        sx={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: { xs: "180px", md: "240px" },
+          background: "linear-gradient(to bottom, transparent 0%, #080d1a 100%)",
+          zIndex: 1,
+          pointerEvents: "none",
+        }}
+      />
+
       <Container sx={{ position: "relative", zIndex: 2, py: { xs: 12, md: 10 } }}>
         <Box sx={{ maxWidth: { xs: "100%", md: 620 } }}>
           {/* Eyebrow */}

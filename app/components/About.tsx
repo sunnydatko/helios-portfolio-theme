@@ -1,16 +1,18 @@
 "use client";
 
 import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { SiReact, SiTypescript, SiJavascript } from "react-icons/si";
+import { MdAccessibility } from "react-icons/md";
+import { FaMobileAlt } from "react-icons/fa";
 
 const skills = [
-  "React",
-  "React Native",
-  "TypeScript",
-  "JavaScript",
-  "Accessibility",
+  { label: "React", Icon: SiReact },
+  { label: "React Native", Icon: FaMobileAlt },
+  { label: "TypeScript", Icon: SiTypescript },
+  { label: "JavaScript", Icon: SiJavascript },
+  { label: "Accessibility", Icon: MdAccessibility },
 ];
 
 export default function About() {
@@ -20,7 +22,6 @@ export default function About() {
       id="about"
       sx={{
         py: { xs: 10, md: 14 },
-        borderTop: "1px solid rgba(217,164,65,0.12)",
         position: "relative",
         zIndex: 1,
         background:
@@ -54,34 +55,43 @@ export default function About() {
           Turning product ideas into polished user experiences
         </Typography>
 
-        <Box
-          className="reveal"
-          style={{ transitionDelay: "0.2s" }}
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 1.25,
-            mb: 4,
-            justifyContent: "center",
-          }}
-        >
-          {skills.map((skill) => (
-            <Chip key={skill} label={skill} variant="outlined" />
-          ))}
-        </Box>
-
         <Typography
           className="reveal"
-          style={{ transitionDelay: "0.3s" }}
+          style={{ transitionDelay: "0.2s" }}
           sx={{
             color: "grey.300",
             fontSize: { xs: "17px", md: "21px" },
             lineHeight: 1.7,
-            mb: 0,
+            mb: 5,
           }}
         >
           I'm a Senior Software Engineer with a passion for building scalable products, thoughtful design systems, and user experiences that feel effortless to use. I enjoy working across product, design, and engineering to turn ideas into polished, maintainable solutions.
         </Typography>
+
+        <Box
+          className="reveal"
+          style={{ transitionDelay: "0.3s" }}
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: { xs: 3, md: 4 },
+            justifyContent: "center",
+          }}
+        >
+          {skills.map(({ label, Icon }) => (
+            <Box
+              key={label}
+              title={label}
+              sx={{
+                opacity: 0.3,
+                transition: "opacity 0.2s ease",
+                "&:hover": { opacity: 0.65 },
+              }}
+            >
+              <Icon size={22} color="white" />
+            </Box>
+          ))}
+        </Box>
       </Container>
     </Box>
   );

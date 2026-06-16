@@ -8,6 +8,7 @@ import Testimonial from "./components/Testimonial";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import ScrollReveal from "./components/ScrollReveal";
+import SectionDivider from "./components/SectionDivider";
 
 export default function Home() {
   return (
@@ -17,10 +18,15 @@ export default function Home() {
       <ScrollReveal />
       <main style={{ position: "relative", zIndex: 1 }}>
         <Hero />
+        <SectionDivider />
         <About />
+        <SectionDivider />
         <Experience />
+        <SectionDivider />
         <Writing />
+        <SectionDivider />
         <Testimonial />
+        <SectionDivider />
         <Contact />
       </main>
       <Footer />
